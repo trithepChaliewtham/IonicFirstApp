@@ -1,9 +1,10 @@
 MobileDevelop After Midterm
 
-	install 
+  INSTALL 
+
 		git clone https://github.com/trithepChaliewtham/IonicFirstApp.git
 		cd IonicFirstApp
 		npm install
 
-	run
+  RUN-PROJECT
 		ionic serve
