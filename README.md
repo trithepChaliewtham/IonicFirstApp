@@ -7,4 +7,5 @@ MobileDevelop After Midterm
 		npm install
 
   RUN-PROJECT
+  
 		ionic serve
