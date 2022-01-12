@@ -1,5 +1,6 @@
 import React , { useState } from 'react';
 
+import Loginresult from './Loginresult';
 import { 
   IonButton,
   IonIcon,
@@ -8,29 +9,45 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonRadio,
+  IonRadioGroup,
+  IonItemDivider,
+  IonListHeader,
   useIonToast
 } from '@ionic/react';
 import { star } from 'ionicons/icons';
 //
-// import { Component } from 'react';
-// import { ToastController } from '@ionic/react';
-const Body: React.FC = () => {
+
+const Body = ({history}:any) => {
   const [ username , setUsername ] = useState<string>("");
   const [ password , setPassword ] = useState<string>("");
+  const [ selected , setSelected ] = useState<string>("Not Selected");
+  const [ age , setAge ] = useState();
+  const [ price , setPrice ] = useState(0); 
+  const [ maxperson , setMaxperson] = useState(0);
   const [ present , dismiss ] = useIonToast();
-  // const target = e.target as HTMLTextAreaElement;
-  const onLogin = () => {
-    // console.log("SSS");
-    alert("Clicked Login!");
+  
+  const dataobj = {
+    username:username,
+    password:password,
+    age : age,
+    course:{
+      name : selected,
+      price : price,
+      maxperson : maxperson,
+    },
   }
-  const formHandle = async () => {
-    // const res = await;
-    alert(`${username} ${password}`);
-  }
+  const jsondata = JSON.stringify(dataobj);
+  const formhandle = async(e:any) => {
+        e.preventDefault();
+        if (username != "" && password != ""){
+          history.push(`/Loginresult/${jsondata}`)
+        } 
+
+  } 
   return (
       <IonContent>
         <IonButton 
-            style={{marginLeft : "45%" ,marginTop : "1%"}}
             onClick={() =>
               present(
                 {
@@ -41,28 +58,97 @@ const Body: React.FC = () => {
             }
           >
           Greeting Button
-          {console.log(present)}
         </IonButton>
+        <br/>
         <IonList>
-          <IonItem >
-              <IonLabel position="floating"><i>Username</i></IonLabel>
-              <IonInput 
-                  name="name" 
-                  value={username} 
-                  onIonChange={(e: any)=> setUsername(e.target.value)}
-                >
-                  
-              </IonInput>
-          </IonItem>
-          <br/>
-          <IonItem>
-              <IonLabel position="floating"><i>Password</i></IonLabel>
-              <IonInput name="pass"></IonInput>
-          </IonItem>
+            <IonItem >
+                <IonLabel position="floating"><i>Username</i></IonLabel>
+                <IonInput 
+                    name="name" 
+                    value={username} 
+                    onIonChange={(e: any)=> setUsername(e.target.value)}
+                  >
+                    
+                </IonInput>
+            </IonItem>
+            <br/>
+            <IonItem>
+                <IonLabel position="floating"><i>Password</i></IonLabel>
+                <IonInput name="pass"
+                    value={password} 
+                    onIonChange={(e: any)=> setPassword(e.target.value)}
+                ></IonInput>
+            </IonItem>
+            <br/>
+            <IonItem>
+                <IonLabel position="floating"><i>Age</i></IonLabel>
+                <IonInput name="pass"
+                    value={age} 
+                    onIonChange={(e: any)=> setAge(e.target.value)}
+                ></IonInput>
+            </IonItem>
+            <div style={{marginLeft : "5%"}}>
+                <IonRadioGroup  
+                    value={selected}
+                    onIonChange={
+                        (e) => {
+                          setSelected(e.detail.value);
+                          setMaxperson(
+                            e.detail.value == "comsci" ? 
+                              25 : 
+                            e.detail.value == "chinease" ? 
+                              25 :   
+                            e.detail.value == "communication" ? 
+                              15 : 0
+                          );
+                          setPrice(
+                            e.detail.value == "comsci" ? 
+                              2500 : 
+                            e.detail.value == "chinease" ? 
+                              2000 :   
+                            e.detail.value == "communication" ? 
+                              1500 : 0
+                          );
+                        }
+                    }>
+                   
+                    <IonListHeader style={{marginLeft : "2%" , fontSize : '25px'}}>
+                      <IonLabel>Course</IonLabel>
+                    </IonListHeader>
+                    <IonItem>
+                      <IonLabel>COMPUTER-2500 Baht, (25Person/class)</IonLabel>
+                      <IonRadio slot="start" id="1" value="comsci" />
+                    </IonItem>
+
+                    <IonItem>
+                      <IonLabel>CHINEASE LANGUAGES - 2000 Baht (25Person/class) </IonLabel>
+                      <IonRadio slot="start" id="2" value="chinease" />
+                    </IonItem>
+
+                    <IonItem>
+                      <IonLabel>COMMUNICATION SKILL - 1500 Baht (15Person/class)</IonLabel>
+                      <IonRadio slot="start" id="3" value="communication" />
+                    </IonItem>
+                </IonRadioGroup>
+                <IonItemDivider>Your Selection</IonItemDivider>
+                <IonItem>{selected ?? '(none selected'}</IonItem>
+              </div>
         </IonList>
 
-        <IonButton >Login</IonButton>
-
+        <IonButton 
+            // onClick={() => <Loginresult user={username} pass={password} />}
+            onClick={formhandle}
+        >
+            Login
+        </IonButton>
+        <br/>
+        <br/>
+        <IonButton
+            href="/home"
+            routerDirection="back"
+        > 
+            To previous page
+        </IonButton>
         {/*-- Colors --*/}
       </IonContent>
   )
