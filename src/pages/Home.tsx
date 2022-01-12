@@ -1,8 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar , IonButton } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+// import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 
-const Home: React.FC = () => {
+const Home = ({history}:any) => {
   return (
     <IonPage>
       <IonHeader>
@@ -16,8 +16,30 @@ const Home: React.FC = () => {
             <IonTitle size="large">Blank</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer />
+        {/*<ExploreContainer />*/}
       </IonContent>
+        <IonButton
+            // onClick={(e)=>{
+            //     e.preventDefault();
+            //     history.push('/home')
+            //   }
+            // }
+            href="/home"
+            routerDirection="back"
+        > 
+            To previous page
+        </IonButton>
+        <IonButton
+            // onClick={(e)=>{
+            //     e.preventDefault();
+            //     history.push('/body')
+            //   }
+            // }
+            href="/body"
+            routerDirection="forward"
+        > 
+            To next page
+        </IonButton>
     </IonPage>
   );
 };
