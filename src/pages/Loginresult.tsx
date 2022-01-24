@@ -35,7 +35,7 @@ const Loginresult: React.FC<LoginresultProps> = ({match}) => {
                 {/*<IonList>
                   <></IonItem>
                 </IonList>*/}
-                  Course :
+                  Course |
                   <IonList style={{marginLeft : "5%"}}>
                            NAME : {data.course.name}<br/>
                   </IonList>
@@ -62,6 +62,12 @@ const Loginresult: React.FC<LoginresultProps> = ({match}) => {
             routerDirection="back"
         > 
             To previous page
+        </IonButton>
+        <IonButton
+            href="/home"
+            routerDirection="back"
+        > 
+            To Home page
         </IonButton>
       </IonContent>
   )
